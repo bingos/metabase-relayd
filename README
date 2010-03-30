@@ -1,0 +1,132 @@
+NAME
+    metabase-relayd - A relay server for Metabase
+
+SYNOPSIS
+     metabase-relayd [options]
+
+     Options:
+       --debug         - display interesting things;
+       --help            - Display program usage;
+       --version     - Display program version;
+       --url URI     - The URI of a Metabase server to use;
+       --idfile    - The path to an ID file to use;
+       --dbfile    - The path to the database file to use;
+       --address   - A particular IP address to listen on;
+       --port      - The TCP port to listen on;
+
+DESCRIPTION
+    metabase-relayd is a Metabase relay server that acts an intermediate
+    between Test::Reporter::Transport::Socket based CPAN Tester clients and
+    a Metabase server.
+
+COMMAND LINE OPTIONS
+    Command line options override options given in the "CONFIGURATION FILE"
+
+    "--debug"
+        Turns on all output.
+
+    "--help"
+        Displays program usage and exits.
+
+    "--version"
+        Displays the program version and exits.
+
+    "--idfile FILE"
+        Specify a Metabase ID file to use.
+
+    "--dbfile FILE"
+        Specify the file that DBD::SQLite will use for the queue storage.
+
+    "--url URI"
+        The URL of a Metabase server to send reports to.
+
+    "--address IP_ADDRESS"
+        Specify a particular IP address for the listening socket to bind to.
+        The default is INADDR_ANY.
+
+    "--port TCP_PORT"
+        Specify the TCP port for the listening socket to bind to. The
+        default is 0, ie. pick a random port.
+
+CONFIGURATION FILE
+    A number of the above options may be specified in a configuration file,
+    "relayd", that is stored in the ".metabase" directory. See "ENVIRONMENT"
+    for where the ".metabase" directory is located and how to effect its
+    location.
+
+    Command line options will override options from the configuration file.
+
+    The configuration file is parsed using Config::Tiny.
+
+    A subset of the command line options can be specified in the
+    configuration file:
+
+    "debug"
+        Set to a true value to turn on all output.
+
+          debug=1
+
+    "--idfile FILE"
+        Specify a Metabase ID file to use.
+
+          idfile=/home/bingos/.metabase/id.json
+
+    "--dbfile FILE"
+        Specify the file that DBD::SQLite will use for the queue storage.
+
+          dbfile=/home/bingos/.metabase/relaydb
+
+    "--url URI"
+        The URL of a Metabase server to send reports to.
+
+          url=https://metabase.example.url/
+
+    "--address IP_ADDRESS"
+        Specify a particular IP address for the listening socket to bind to.
+        The default is INADDR_ANY.
+
+          address=192.168.0.254
+
+    "--port TCP_PORT"
+        Specify the TCP port for the listening socket to bind to. The
+        default is 0, ie. pick a random port.
+
+          port=8080
+
+ENVIRONMENT
+    "metabase-relayd" uses the ".metabase" directory to locate the
+    configuration file, "relayd".
+
+    This is usually located in the current user's home directory. Setting
+    the environment variable "PERL5_MBRELAYD_DIR" will effect where the
+    ".metabase" directory is located.
+
+KUDOS
+    Thanks go to Ricardo SIGNES for CPAN::Mini which inspired the design of
+    this script/module.
+
+AUTHOR
+    Chris "BinGOs" Williams <chris@bingosnet.co.uk>
+
+LICENSE
+    Copyright © Chris Williams
+
+    This module may be used, modified, and distributed under the same terms
+    as Perl itself. Please see the license that came with your Perl
+    distribution for details.
+
+SEE ALSO
+    <http://www.cpantesters.org/> - CPAN Testers: Index
+
+    <http://wiki.cpantesters.org/> - CPAN Testers Wiki
+
+    <http://stats.cpantesters.org/> - CPAN Testers Statistics
+
+    Metabase
+
+    DBD::SQLite
+
+    Config::Tiny
+
+    POE::Component::Metabase::Relay::Server
+

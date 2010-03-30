@@ -4,6 +4,7 @@ name 'metabase-relayd';
 author 'Chris Williams <chris@bingosnet.co.uk>';
 version_from 'lib/App/Metabase/Relayd.pm';
 abstract_from 'bin/metabase-relayd';
+readme_from 'bin/metabase-relayd';
 install_script 'bin/metabase-relayd';
 license 'perl';
 auto_license holder => 'Chris Williams';
@@ -38,6 +39,7 @@ if ( $prompt =~ /^Y/i ) {
 }
 
 }
+makemaker_args(dist => { PREOP => "$^X ./tools/git-log.pl > ./Changes" });
 auto_provides;
 githubmeta;
 WriteAll();
