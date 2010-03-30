@@ -28,6 +28,10 @@ metabase-relayd - A relay server for Metabase
 
 =head1 DESCRIPTION
 
+metabase-relayd is a L<Metabase> relay server that acts an intermediate between
+L<Test::Reporter::Transport::Socket> based CPAN Tester clients and a L<Metabase>
+server.
+
 =head1 COMMAND LINE OPTIONS
 
 Command line options override options given in the L</"CONFIGURATION FILE">
@@ -46,11 +50,25 @@ Displays program usage and exits.
 
 Displays the program version and exits.
 
+=item C<--idfile FILE>
+
+Specify a L<Metabase> ID file to use.
+
+=item C<--dbfile FILE>
+
+Specify the file that L<DBD::SQLite> will use for the queue storage.
+
 =item C<--url URI>
+
+The URL of a L<Metabase> server to send reports to.
 
 =item C<--address IP_ADDRESS>
 
+Specify a particular IP address for the listening socket to bind to. The default is INADDR_ANY.
+
 =item C<--port TCP_PORT>
+
+Specify the TCP port for the listening socket to bind to. The default is 0, ie. pick a random port.
 
 =back
 
@@ -73,9 +91,35 @@ Set to a true value to turn on all output.
 
   debug=1
 
-=item C<url>
+=item C<--idfile FILE>
 
-  url=http://www.cpan.org/
+Specify a L<Metabase> ID file to use.
+
+  idfile=/home/bingos/.metabase/id.json
+
+=item C<--dbfile FILE>
+
+Specify the file that L<DBD::SQLite> will use for the queue storage.
+
+  dbfile=/home/bingos/.metabase/relaydb
+
+=item C<--url URI>
+
+The URL of a L<Metabase> server to send reports to.
+
+  url=https://metabase.example.url/
+
+=item C<--address IP_ADDRESS>
+
+Specify a particular IP address for the listening socket to bind to. The default is INADDR_ANY.
+
+  address=192.168.0.254
+
+=item C<--port TCP_PORT>
+
+Specify the TCP port for the listening socket to bind to. The default is 0, ie. pick a random port.
+
+  port=8080
 
 =back
 
@@ -109,5 +153,11 @@ L<http://wiki.cpantesters.org/> 	- CPAN Testers Wiki
 L<http://stats.cpantesters.org/>	- CPAN Testers Statistics
 
 L<Metabase>
+
+L<DBD::SQLite>
+
+L<Config::Tiny>
+
+L<POE::Component::Metabase::Relay::Server>
 
 =cut
