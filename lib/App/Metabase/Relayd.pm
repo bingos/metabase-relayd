@@ -12,7 +12,7 @@ use POE::Component::Metabase::Relay::Server;
 
 use vars qw($VERSION);
 
-$VERSION = '0.02';
+$VERSION = '0.04';
 
 sub _metabase_dir {
   return $ENV{PERL5_MBRELAYD_DIR} 
@@ -31,9 +31,9 @@ sub _metabase_dir {
 }
 
 sub _read_config {
-  my $smokebox_dir = File::Spec->catdir( _smokebox_dir(), '.metabase' );
-  return unless -d $smokebox_dir;
-  my $conf_file = File::Spec->catfile( $smokebox_dir, 'relayd' );
+  my $metabase_dir = File::Spec->catdir( _metabase_dir(), '.metabase' );
+  return unless -d $metabase_dir;
+  my $conf_file = File::Spec->catfile( $metabase_dir, 'relayd' );
   return unless -e $conf_file;
   my $Config = Config::Tiny->read( $conf_file );
   my @config;
