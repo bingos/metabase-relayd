@@ -3,7 +3,7 @@ use inc::Module::Install;
 name 'metabase-relayd';
 author 'Chris Williams <chris@bingosnet.co.uk>';
 version_from 'lib/App/Metabase/Relayd.pm';
-abstract_from 'bin/metabase-relayd';
+abstract 'A relay server for Metabase';
 readme_from 'bin/metabase-relayd';
 install_script 'bin/metabase-relayd';
 license 'perl';
