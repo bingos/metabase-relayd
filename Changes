@@ -1,6 +1,13 @@
 ==============================
-9999-99-99 99:99:99 +0000 HEAD
+2010-03-30 15:22:56 +0100 0.04
 ==============================
+
+  commit b6fe8f649af251e7f8657c9829c2bd9ae3a31bae
+  Author: Chris Williams <chris@bingosnet.co.uk>
+  Date:   Tue Mar 30 15:22:56 2010 +0100
+  
+    Fixed the missing _smokebox_dir() error. This is what you get when
+    you cut'n'paste
 
   commit 26cbcb0d411b91419f223b903f7d75c96b73a69a
   Author: Chris Williams <chris@bingosnet.co.uk>

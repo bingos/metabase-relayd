@@ -25,6 +25,7 @@ metabase-relayd - A relay server for Metabase
    --dbfile    - The path to the database file to use;
    --address   - A particular IP address to listen on;
    --port      - The TCP port to listen on;
+   --multiple  - Whether to use multiple HTTP clients;
 
 =head1 DESCRIPTION
 
@@ -70,6 +71,12 @@ Specify a particular IP address for the listening socket to bind to. The default
 
 Specify the TCP port for the listening socket to bind to. The default is 0, ie. pick a random port.
 
+=item C<--multiple>
+
+By default a single L<POE::Component::Client::HTTP> instance is created and used to send
+each report. Enabling this option means that a new instance of L<POE::Component::Client::HTTP> will
+be created for each report submitted.
+
 =back
 
 =head1 CONFIGURATION FILE
@@ -85,41 +92,49 @@ A subset of the command line options can be specified in the configuration file:
 
 =over
 
-=item C<debug>
+=item C<debug=BOOL>
 
 Set to a true value to turn on all output.
 
   debug=1
 
-=item C<--idfile FILE>
+=item C<idfile=FILE>
 
 Specify a L<Metabase> ID file to use.
 
   idfile=/home/bingos/.metabase/id.json
 
-=item C<--dbfile FILE>
+=item C<dbfile=FILE>
 
 Specify the file that L<DBD::SQLite> will use for the queue storage.
 
   dbfile=/home/bingos/.metabase/relaydb
 
-=item C<--url URI>
+=item C<url=URI>
 
 The URL of a L<Metabase> server to send reports to.
 
   url=https://metabase.example.url/
 
-=item C<--address IP_ADDRESS>
+=item C<address=IP_ADDRESS>
 
 Specify a particular IP address for the listening socket to bind to. The default is INADDR_ANY.
 
   address=192.168.0.254
 
-=item C<--port TCP_PORT>
+=item C<port=TCP_PORT>
 
 Specify the TCP port for the listening socket to bind to. The default is 0, ie. pick a random port.
 
   port=8080
+
+=item C<multiple=BOOL>
+
+By default a single L<POE::Component::Client::HTTP> instance is created and used to send
+each report. Enabling this option means that a new instance of L<POE::Component::Client::HTTP> will
+be created for each report submitted.
+
+  multiple=1
 
 =back
 

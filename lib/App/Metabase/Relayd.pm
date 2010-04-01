@@ -12,7 +12,7 @@ use POE::Component::Metabase::Relay::Server;
 
 use vars qw($VERSION);
 
-$VERSION = '0.04';
+$VERSION = '0.06';
 
 sub _metabase_dir {
   return $ENV{PERL5_MBRELAYD_DIR} 
@@ -40,7 +40,7 @@ sub _read_config {
   if ( defined $Config->{_} ) {
     my $root = delete $Config->{_};
 	  @config = map { $_, $root->{$_} } grep { exists $root->{$_} }
-		              qw(debug url idfile dbfile address port);
+		              qw(debug url idfile dbfile address port multiple);
   }
   return @config;
 }
@@ -69,23 +69,25 @@ sub run {
     "url=s"	    => \$config{url},
     "dbfile=s"  => \$config{dbfile},
     "idfile=s"	=> \$config{idfile},
+    "multiple"	=> \$config{multiple},
   ) or pod2usage(2);
 
   _display_version() if $version;
 
   print "Running metabase-relayd with options:\n";
   printf("%-20s %s\n", $_, $config{$_}) 
-	  for grep { defined $config{$_} } qw(debug url dbfile idfile address port);
+	  for grep { defined $config{$_} } qw(debug url dbfile idfile address port multiple);
 
   my $self = bless \%config, $package;
 
   $self->{relayd} = POE::Component::Metabase::Relay::Server->spawn(
     ( defined $self->{address} ? ( address => $self->{address} ) : () ),
     ( defined $self->{port} ? ( port => $self->{port} ) : () ),
-    id_file => $self->{idfile},
-    dsn     => 'dbi:SQLite:dbname=' . $self->{dbfile},
-    uri     => $self->{url},
-    debug   => $self->{debug},
+    id_file  => $self->{idfile},
+    dsn      => 'dbi:SQLite:dbname=' . $self->{dbfile},
+    uri      => $self->{url},
+    debug    => $self->{debug},
+    multiple => $self->{multiple},
   );
 
 
