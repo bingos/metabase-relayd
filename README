@@ -13,6 +13,7 @@ SYNOPSIS
        --dbfile    - The path to the database file to use;
        --address   - A particular IP address to listen on;
        --port      - The TCP port to listen on;
+       --multiple  - Whether to use multiple HTTP clients;
 
 DESCRIPTION
     metabase-relayd is a Metabase relay server that acts an intermediate
@@ -48,6 +49,12 @@ COMMAND LINE OPTIONS
         Specify the TCP port for the listening socket to bind to. The
         default is 0, ie. pick a random port.
 
+    "--multiple"
+        By default a single POE::Component::Client::HTTP instance is created
+        and used to send each report. Enabling this option means that a new
+        instance of POE::Component::Client::HTTP will be created for each
+        report submitted.
+
 CONFIGURATION FILE
     A number of the above options may be specified in a configuration file,
     "relayd", that is stored in the ".metabase" directory. See "ENVIRONMENT"
@@ -61,37 +68,45 @@ CONFIGURATION FILE
     A subset of the command line options can be specified in the
     configuration file:
 
-    "debug"
+    "debug=BOOL"
         Set to a true value to turn on all output.
 
           debug=1
 
-    "--idfile FILE"
+    "idfile=FILE"
         Specify a Metabase ID file to use.
 
           idfile=/home/bingos/.metabase/id.json
 
-    "--dbfile FILE"
+    "dbfile=FILE"
         Specify the file that DBD::SQLite will use for the queue storage.
 
           dbfile=/home/bingos/.metabase/relaydb
 
-    "--url URI"
+    "url=URI"
         The URL of a Metabase server to send reports to.
 
           url=https://metabase.example.url/
 
-    "--address IP_ADDRESS"
+    "address=IP_ADDRESS"
         Specify a particular IP address for the listening socket to bind to.
         The default is INADDR_ANY.
 
           address=192.168.0.254
 
-    "--port TCP_PORT"
+    "port=TCP_PORT"
         Specify the TCP port for the listening socket to bind to. The
         default is 0, ie. pick a random port.
 
           port=8080
+
+    "multiple=BOOL"
+        By default a single POE::Component::Client::HTTP instance is created
+        and used to send each report. Enabling this option means that a new
+        instance of POE::Component::Client::HTTP will be created for each
+        report submitted.
+
+          multiple=1
 
 ENVIRONMENT
     "metabase-relayd" uses the ".metabase" directory to locate the
