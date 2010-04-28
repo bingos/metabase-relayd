@@ -5,15 +5,17 @@ SYNOPSIS
      metabase-relayd [options]
 
      Options:
-       --debug         - display interesting things;
-       --help            - Display program usage;
-       --version     - Display program version;
-       --url URI     - The URI of a Metabase server to use;
-       --idfile    - The path to an ID file to use;
-       --dbfile    - The path to the database file to use;
-       --address   - A particular IP address to listen on;
-       --port      - The TCP port to listen on;
-       --multiple  - Whether to use multiple HTTP clients;
+       --debug            - display interesting things;
+       --help               - Display program usage;
+       --version        - Display program version;
+       --url URI        - The URI of a Metabase server to use;
+       --idfile       - The path to an ID file to use;
+       --dbfile       - The path to the database file to use;
+       --address      - A particular IP address to listen on;
+       --port         - The TCP port to listen on;
+       --multiple     - Whether to use multiple HTTP clients;
+       --submissions  - control the number of 'multiple' clients;
+       --norelay      - disable report submissions to the Metabase;
 
 DESCRIPTION
     metabase-relayd is a Metabase relay server that acts an intermediate
@@ -43,7 +45,8 @@ COMMAND LINE OPTIONS
 
     "--address IP_ADDRESS"
         Specify a particular IP address for the listening socket to bind to.
-        The default is INADDR_ANY.
+        The default is INADDR_ANY. This may also be a comma-separated list
+        of IP addresses, if you wish to bind to more than one address.
 
     "--port TCP_PORT"
         Specify the TCP port for the listening socket to bind to. The
@@ -54,6 +57,14 @@ COMMAND LINE OPTIONS
         and used to send each report. Enabling this option means that a new
         instance of POE::Component::Client::HTTP will be created for each
         report submitted.
+
+    "--submissions INTEGER"
+        In conjunction with "multiple" controls the number of concurrent
+        submissions to the Metabase.
+
+    "--norelay"
+        Enable this so that reports are recorded to the database but not
+        submitted to the Metabase.
 
 CONFIGURATION FILE
     A number of the above options may be specified in a configuration file,
@@ -90,9 +101,12 @@ CONFIGURATION FILE
 
     "address=IP_ADDRESS"
         Specify a particular IP address for the listening socket to bind to.
-        The default is INADDR_ANY.
+        The default is INADDR_ANY. This may also be a comma-separated list
+        of IP addresses, if you wish to bind to more than one address.
 
           address=192.168.0.254
+
+          address=192.168.0.254,127.0.0.1
 
     "port=TCP_PORT"
         Specify the TCP port for the listening socket to bind to. The
@@ -107,6 +121,18 @@ CONFIGURATION FILE
         report submitted.
 
           multiple=1
+
+    "submissions=INTEGER"
+        In conjunction with "multiple" controls the number of concurrent
+        submissions to the Metabase.
+
+          submissions=10
+
+    "norelay=BOOL"
+        Enable this so that reports are recorded to the database but not
+        submitted to the Metabase.
+
+          norelay=1
 
 ENVIRONMENT
     "metabase-relayd" uses the ".metabase" directory to locate the

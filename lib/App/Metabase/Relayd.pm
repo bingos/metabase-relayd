@@ -12,7 +12,7 @@ use POE::Component::Metabase::Relay::Server;
 
 use vars qw($VERSION);
 
-$VERSION = '0.06';
+$VERSION = '0.08';
 
 sub _metabase_dir {
   return $ENV{PERL5_MBRELAYD_DIR} 
@@ -61,15 +61,17 @@ sub run {
   my %config = _read_config();
   my $version;
   GetOptions(
-    "help"      => sub { pod2usage(1); },
-    "version"   => sub { $version = 1 },
-    "debug"     => \$config{debug},
-    "address=s" => \$config{address},
-    "port=s"    => \$config{port},
-    "url=s"	    => \$config{url},
-    "dbfile=s"  => \$config{dbfile},
-    "idfile=s"	=> \$config{idfile},
-    "multiple"	=> \$config{multiple},
+    "help"        => sub { pod2usage(1); },
+    "version"     => sub { $version = 1 },
+    "debug"       => \$config{debug},
+    "address=s"   => \$config{address},
+    "port=s"      => \$config{port},
+    "url=s"	      => \$config{url},
+    "dbfile=s"    => \$config{dbfile},
+    "idfile=s"	  => \$config{idfile},
+    "multiple"	  => \$config{multiple},
+    "norelay"     => \$config{norelay},
+    "submissions" => \$config{submissions},
   ) or pod2usage(2);
 
   _display_version() if $version;
@@ -80,14 +82,25 @@ sub run {
 
   my $self = bless \%config, $package;
 
+  if ( $self->{address} ) {
+    $self->{address} =~ s/\s+//g;
+    $self->{address} = [ split /,/, $self->{address} ];
+  }
+
+  use Data::Dumper;
+  $Data::Dumper::Indent=1;
+  warn Dumper( $self->{address} );
+
   $self->{relayd} = POE::Component::Metabase::Relay::Server->spawn(
     ( defined $self->{address} ? ( address => $self->{address} ) : () ),
     ( defined $self->{port} ? ( port => $self->{port} ) : () ),
-    id_file  => $self->{idfile},
-    dsn      => 'dbi:SQLite:dbname=' . $self->{dbfile},
-    uri      => $self->{url},
-    debug    => $self->{debug},
-    multiple => $self->{multiple},
+    id_file     => $self->{idfile},
+    dsn         => 'dbi:SQLite:dbname=' . $self->{dbfile},
+    uri         => $self->{url},
+    debug       => $self->{debug},
+    multiple    => $self->{multiple},
+    no_relay    => $self->{norelay},
+    ( defined $self->{submissions} ? ( submissions => $self->{submissions} ) : () ),
   );
 
 
