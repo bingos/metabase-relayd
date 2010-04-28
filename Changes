@@ -1,4 +1,27 @@
 ==============================
+2010-04-28 23:11:30 +0100 0.08
+==============================
+
+  commit c1ec7aa8db3552e1ca959f85977a8f4c3ae7d056
+  Author: Chris Williams <chris@bingosnet.co.uk>
+  Date:   Wed Apr 28 23:11:30 2010 +0100
+  
+    Require version 0.08 of POE::Component::Metabase::Relay::Server
+
+  commit 264092ddb8c61dc7c155e4d21ebd6da2e3e0cb27
+  Author: Chris Williams <chris@bingosnet.co.uk>
+  Date:   Wed Apr 28 23:07:38 2010 +0100
+  
+    Added new command line and config file options, including specifying
+    multiple bind addresses, requested by Florian Ragwitz
+
+  commit 41efbed55a3e35b0767f23d414132078c18039ff
+  Author: Chris Williams <chris@bingosnet.co.uk>
+  Date:   Tue Apr 27 21:59:45 2010 +0100
+  
+    Sync changes 
+
+==============================
 2010-04-01 10:42:39 +0100 0.06
 ==============================
 

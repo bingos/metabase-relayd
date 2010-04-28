@@ -12,7 +12,7 @@ use POE::Component::Metabase::Relay::Server;
 
 use vars qw($VERSION);
 
-$VERSION = '0.08';
+$VERSION = '0.10';
 
 sub _metabase_dir {
   return $ENV{PERL5_MBRELAYD_DIR} 
@@ -64,7 +64,7 @@ sub run {
     "help"        => sub { pod2usage(1); },
     "version"     => sub { $version = 1 },
     "debug"       => \$config{debug},
-    "address=s"   => \$config{address},
+    "address=s@"  => \$config{address},
     "port=s"      => \$config{port},
     "url=s"	      => \$config{url},
     "dbfile=s"    => \$config{dbfile},
@@ -77,19 +77,19 @@ sub run {
   _display_version() if $version;
 
   print "Running metabase-relayd with options:\n";
-  printf("%-20s %s\n", $_, $config{$_}) 
+  printf("%-20s %s\n", $_, ref $config{$_}
+    ? (join q{, } => @{ $config{$_} })
+    : $config{$_})
 	  for grep { defined $config{$_} } qw(debug url dbfile idfile address port multiple);
 
   my $self = bless \%config, $package;
 
   if ( $self->{address} ) {
-    $self->{address} =~ s/\s+//g;
-    $self->{address} = [ split /,/, $self->{address} ];
+    $self->{address} = [ 
+      split(/,/,join(',',( ref $self->{address} eq 'ARRAY' ? @{ $self->{address} } : $self->{address} )))
+    ];
+    s/\s+//g for @{ $self->{address} };
   }
-
-  use Data::Dumper;
-  $Data::Dumper::Indent=1;
-  warn Dumper( $self->{address} );
 
   $self->{relayd} = POE::Component::Metabase::Relay::Server->spawn(
     ( defined $self->{address} ? ( address => $self->{address} ) : () ),
