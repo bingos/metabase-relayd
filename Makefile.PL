@@ -15,7 +15,7 @@ requires 'File::Spec' => 0;
 requires 'File::Path' => 0;
 requires 'Pod::Usage' => '1.00';
 requires 'POE' => 1.287;
-requires 'POE::Component::Metabase::Relay::Server' => '0.02';
+requires 'POE::Component::Metabase::Relay::Server' => '0.08';
 if ( !( can_use('Event') and can_use('POE::XS::Queue::Array') ) and can_cc() ) {
 print <<NOTICE;
 
