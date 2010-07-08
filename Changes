@@ -1,4 +1,15 @@
 ==============================
+2010-04-29 00:34:59 +0100 0.10
+==============================
+
+  commit f990d25e718de68797d7f0e7e88ccbfd53c97a85
+  Author: Chris Williams <chris@bingosnet.co.uk>
+  Date:   Thu Apr 29 00:34:59 2010 +0100
+  
+    Merge in Florian Ragwitz's suggested changes regarding handling
+    multiple addresses 
+
+==============================
 2010-04-28 23:11:30 +0100 0.08
 ==============================
 

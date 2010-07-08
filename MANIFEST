@@ -13,6 +13,7 @@ inc/Module/Install/Scripts.pm
 inc/Module/Install/Win32.pm
 inc/Module/Install/WriteAll.pm
 lib/App/Metabase/Relayd.pm
+lib/App/Metabase/Relayd/Plugin.pm
 LICENSE
 Makefile.PL
 MANIFEST			This list of files

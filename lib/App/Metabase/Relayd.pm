@@ -7,12 +7,14 @@ use Config::Tiny;
 use File::Spec;
 use Cwd;
 use Getopt::Long;
+use Module::Pluggable search_path => ['App::Metabase::Relayd::Plugin'];
+use Module::Load::Conditional qw[can_load];
 use POE;
 use POE::Component::Metabase::Relay::Server;
 
 use vars qw($VERSION);
 
-$VERSION = '0.10';
+$VERSION = '0.12';
 
 sub _metabase_dir {
   return $ENV{PERL5_MBRELAYD_DIR} 
@@ -41,6 +43,7 @@ sub _read_config {
     my $root = delete $Config->{_};
 	  @config = map { $_, $root->{$_} } grep { exists $root->{$_} }
 		              qw(debug url idfile dbfile address port multiple);
+    push @config, 'plugins', $Config;
   }
   return @config;
 }
@@ -91,6 +94,12 @@ sub run {
     s/\s+//g for @{ $self->{address} };
   }
 
+  $self->{id} = POE::Session->create(
+    object_states => [
+        $self => [qw(_start _child _recv_evt)],
+    ],
+  )->ID();
+
   $self->{relayd} = POE::Component::Metabase::Relay::Server->spawn(
     ( defined $self->{address} ? ( address => $self->{address} ) : () ),
     ( defined $self->{port} ? ( port => $self->{port} ) : () ),
@@ -100,14 +109,40 @@ sub run {
     debug       => $self->{debug},
     multiple    => $self->{multiple},
     no_relay    => $self->{norelay},
+    session     => $self->{id},
+    recv_event  => '_recv_evt',
     ( defined $self->{submissions} ? ( submissions => $self->{submissions} ) : () ),
   );
-
 
   $poe_kernel->run();
   return 1;
 }
 
+sub _start {
+  my ($kernel,$self) = @_[KERNEL,OBJECT];
+  $self->{id} = $_[SESSION]->ID();
+  $kernel->refcount_increment( $self->{id}, __PACKAGE__ );
+  # Initialise plugins
+  foreach my $plugin ( $self->plugins() ) {
+     next unless can_load( modules => { $plugin } );
+     eval { $plugin->init( $self->{plugins} ); };
+  }
+  return;
+}
+
+sub _child {
+  my ($kernel,$self,$reason,$child) = @_[KERNEL,OBJECT,ARG0,ARG1];
+  return unless $reason eq 'create';
+  push @{ $self->{_sessions} }, $child->ID();
+  $kernel->detach_child( $child );
+  return;
+}
+
+sub _recv_evt {
+  my ($kernel,$self,$data,$ip) = @_[KERNEL,OBJECT,ARG0,ARG1];
+  $kernel->post( $_, 'mbrd_received', $data, $ip ) for @{ $self->{_sessions} };
+  return;
+}
 
 'Relay it!';
 
