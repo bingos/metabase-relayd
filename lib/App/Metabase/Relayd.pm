@@ -124,7 +124,7 @@ sub _start {
   $kernel->refcount_increment( $self->{id}, __PACKAGE__ );
   # Initialise plugins
   foreach my $plugin ( $self->plugins() ) {
-     next unless can_load( modules => { $plugin } );
+     next unless can_load( modules => { $plugin => '0' } );
      eval { $plugin->init( $self->{plugins} ); };
   }
   return;
