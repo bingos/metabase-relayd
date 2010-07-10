@@ -14,7 +14,7 @@ use POE::Component::Metabase::Relay::Server;
 
 use vars qw($VERSION);
 
-$VERSION = '0.12';
+$VERSION = '0.14';
 
 sub _metabase_dir {
   return $ENV{PERL5_MBRELAYD_DIR} 

@@ -1,4 +1,20 @@
 ==============================
+2010-07-08 14:11:39 +0100 0.12
+==============================
+
+  commit e7d588c86e520c959917655dc69b13955f632713
+  Author: Chris 'BinGOs' Williams <chris@bingosnet.co.uk>
+  Date:   Thu Jul 8 14:11:39 2010 +0100
+  
+    Fix some issues that were exposed by testing
+
+  commit 3b450a5a6d14fc04dc0328e8c66d501dde791253
+  Author: Chris 'BinGOs' Williams <chris@bingosnet.co.uk>
+  Date:   Thu Jul 8 13:06:28 2010 +0100
+  
+    Implemented plugins system 
+
+==============================
 2010-04-29 00:34:59 +0100 0.10
 ==============================
 

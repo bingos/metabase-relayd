@@ -13,6 +13,7 @@ build_requires 'Test::More' => 0.47;
 requires 'Config::Tiny' => 2.12;
 requires 'File::Spec' => 0;
 requires 'File::Path' => 0;
+requires 'Module::Load::Conditional' => '0.38';
 requires 'Pod::Usage' => '1.00';
 requires 'POE' => 1.287;
 requires 'POE::Component::Metabase::Relay::Server' => '0.14';
