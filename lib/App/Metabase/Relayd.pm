@@ -14,7 +14,7 @@ use POE::Component::Metabase::Relay::Server;
 
 use vars qw($VERSION);
 
-$VERSION = '0.14';
+$VERSION = '0.16';
 
 sub _metabase_dir {
   return $ENV{PERL5_MBRELAYD_DIR} 
@@ -78,6 +78,9 @@ sub run {
   ) or pod2usage(2);
 
   _display_version() if $version;
+
+  $config{idfile} = File::Spec->catfile( _metabase_dir(), '.metabase', 'metabase_id.json' ) unless $config{idfile};
+  $config{dbfile} = File::Spec->catfile( _metabase_dir(), '.metabase', 'relay.db' ) unless $config{dbfile};
 
   print "Running metabase-relayd with options:\n";
   printf("%-20s %s\n", $_, ref $config{$_}

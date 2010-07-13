@@ -37,8 +37,13 @@ COMMAND LINE OPTIONS
     "--idfile FILE"
         Specify a Metabase ID file to use.
 
+        The default is "metabase_id.json" located in the ".metabase"
+        directory.
+
     "--dbfile FILE"
         Specify the file that DBD::SQLite will use for the queue storage.
+
+        The default is "relay.db" located in the ".metabase" directory.
 
     "--url URI"
         The URL of a Metabase server to send reports to.
@@ -89,10 +94,15 @@ CONFIGURATION FILE
 
           idfile=/home/bingos/.metabase/id.json
 
+        The default is "metabase_id.json" located in the ".metabase"
+        directory.
+
     "dbfile=FILE"
         Specify the file that DBD::SQLite will use for the queue storage.
 
           dbfile=/home/bingos/.metabase/relaydb
+
+        The default is "relay.db" located in the ".metabase" directory.
 
     "url=URI"
         The URL of a Metabase server to send reports to.

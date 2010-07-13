@@ -57,9 +57,13 @@ Displays the program version and exits.
 
 Specify a L<Metabase> ID file to use.
 
+The default is C<metabase_id.json> located in the C<.metabase> directory.
+
 =item C<--dbfile FILE>
 
 Specify the file that L<DBD::SQLite> will use for the queue storage.
+
+The default is C<relay.db> located in the C<.metabase> directory.
 
 =item C<--url URI>
 
@@ -116,11 +120,15 @@ Specify a L<Metabase> ID file to use.
 
   idfile=/home/bingos/.metabase/id.json
 
+The default is C<metabase_id.json> located in the C<.metabase> directory.
+
 =item C<dbfile=FILE>
 
 Specify the file that L<DBD::SQLite> will use for the queue storage.
 
   dbfile=/home/bingos/.metabase/relaydb
+
+The default is C<relay.db> located in the C<.metabase> directory.
 
 =item C<url=URI>
 
