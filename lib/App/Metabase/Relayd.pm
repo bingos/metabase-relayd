@@ -9,12 +9,15 @@ use Cwd;
 use Getopt::Long;
 use Module::Pluggable search_path => ['App::Metabase::Relayd::Plugin'];
 use Module::Load::Conditional qw[can_load];
-use POE;
+BEGIN {
+  sub POE::Kernel::USE_SIGCHLD () { 1 }
+  use POE;
+}
 use POE::Component::Metabase::Relay::Server;
 
 use vars qw($VERSION);
 
-$VERSION = '0.16';
+$VERSION = '0.18';
 
 sub _metabase_dir {
   return $ENV{PERL5_MBRELAYD_DIR} 

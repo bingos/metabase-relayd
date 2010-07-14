@@ -3,7 +3,7 @@ package App::Metabase::Relayd::Plugin;
 use strict;
 use warnings;
 
-our $VERSION = '0.16';
+our $VERSION = '0.18';
 
 qq[Smokin' plugins];
 
