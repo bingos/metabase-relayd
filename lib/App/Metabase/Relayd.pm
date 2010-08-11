@@ -17,7 +17,7 @@ use POE::Component::Metabase::Relay::Server;
 
 use vars qw($VERSION);
 
-$VERSION = '0.18';
+$VERSION = '0.20';
 
 sub _metabase_dir {
   return $ENV{PERL5_MBRELAYD_DIR} 
@@ -45,7 +45,7 @@ sub _read_config {
   if ( defined $Config->{_} ) {
     my $root = delete $Config->{_};
 	  @config = map { $_, $root->{$_} } grep { exists $root->{$_} }
-		              qw(debug url idfile dbfile address port multiple);
+		              qw(debug url idfile dbfile address port multiple norelay offline);
     push @config, 'plugins', $Config;
   }
   return @config;
@@ -65,6 +65,7 @@ EOF
 sub run {
   my $package = shift;
   my %config = _read_config();
+  $config{offline} = delete $config{norelay};
   my $version;
   GetOptions(
     "help"        => sub { pod2usage(1); },
@@ -76,7 +77,7 @@ sub run {
     "dbfile=s"    => \$config{dbfile},
     "idfile=s"	  => \$config{idfile},
     "multiple"	  => \$config{multiple},
-    "norelay"     => \$config{norelay},
+    "norelay|offline" => \$config{offline},
     "submissions" => \$config{submissions},
   ) or pod2usage(2);
 
@@ -89,7 +90,7 @@ sub run {
   printf("%-20s %s\n", $_, ref $config{$_}
     ? (join q{, } => @{ $config{$_} })
     : $config{$_})
-	  for grep { defined $config{$_} } qw(debug url dbfile idfile address port multiple);
+	  for grep { defined $config{$_} } qw(debug url dbfile idfile address port multiple offline);
 
   my $self = bless \%config, $package;
 
@@ -114,7 +115,7 @@ sub run {
     uri         => $self->{url},
     debug       => $self->{debug},
     multiple    => $self->{multiple},
-    no_relay    => $self->{norelay},
+    no_relay    => $self->{offline},
     session     => $self->{id},
     recv_event  => '_recv_evt',
     ( defined $self->{submissions} ? ( submissions => $self->{submissions} ) : () ),
