@@ -15,7 +15,7 @@ SYNOPSIS
        --port         - The TCP port to listen on;
        --multiple     - Whether to use multiple HTTP clients;
        --submissions  - control the number of 'multiple' clients;
-       --norelay      - disable report submissions to the Metabase;
+       --offline      - disable report submissions to the Metabase;
 
 DESCRIPTION
     metabase-relayd is a Metabase relay server that acts an intermediate
@@ -67,7 +67,7 @@ COMMAND LINE OPTIONS
         In conjunction with "multiple" controls the number of concurrent
         submissions to the Metabase.
 
-    "--norelay"
+    "--offline"
         Enable this so that reports are recorded to the database but not
         submitted to the Metabase.
 
@@ -138,11 +138,11 @@ CONFIGURATION FILE
 
           submissions=10
 
-    "norelay=BOOL"
+    "offline=BOOL"
         Enable this so that reports are recorded to the database but not
         submitted to the Metabase.
 
-          norelay=1
+          offline=1
 
 ENVIRONMENT
     "metabase-relayd" uses the ".metabase" directory to locate the
