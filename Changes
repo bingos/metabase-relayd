@@ -1,4 +1,20 @@
 ==============================
+2010-08-11 15:05:43 +0100 0.20
+==============================
+
+  commit be2d6d82244c6fd54f3a7ce64009dc51f1a02bf8
+  Author: Chris 'BinGOs' Williams <chris@bingosnet.co.uk>
+  Date:   Wed Aug 11 15:05:43 2010 +0100
+  
+    Update README
+
+  commit 2e387f5a547f343a6c3813f2891241f587b42c5e
+  Author: Chris 'BinGOs' Williams <chris@bingosnet.co.uk>
+  Date:   Wed Aug 11 15:04:14 2010 +0100
+  
+    Renamed the 'norelay' option to the more intuiative 'offline' 
+
+==============================
 2010-07-14 11:20:54 +0100 0.18
 ==============================
 
