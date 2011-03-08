@@ -17,7 +17,7 @@ metabase-relayd - A relay server for Metabase
  metabase-relayd [options]
 
  Options:
-   --debug 	      - display interesting things;
+   --debug	      - display interesting things;
    --help	        - Display program usage;
    --version	    - Display program version;
    --url URI	    - The URI of a Metabase server to use;
@@ -197,9 +197,9 @@ This module may be used, modified, and distributed under the same terms as Perl 
 
 =head1 SEE ALSO
 
-L<http://www.cpantesters.org/> 		- CPAN Testers: Index
+L<http://www.cpantesters.org/>		- CPAN Testers: Index
 
-L<http://wiki.cpantesters.org/> 	- CPAN Testers Wiki
+L<http://wiki.cpantesters.org/>	- CPAN Testers Wiki
 
 L<http://stats.cpantesters.org/>	- CPAN Testers Statistics
 

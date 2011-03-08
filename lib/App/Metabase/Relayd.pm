@@ -24,8 +24,8 @@ use vars qw($VERSION);
 $VERSION = '0.22';
 
 sub _metabase_dir {
-  return $ENV{PERL5_MBRELAYD_DIR} 
-     if  exists $ENV{PERL5_MBRELAYD_DIR} 
+  return $ENV{PERL5_MBRELAYD_DIR}
+     if  exists $ENV{PERL5_MBRELAYD_DIR}
      && defined $ENV{PERL5_MBRELAYD_DIR};
 
   my @os_home_envs = qw( APPDATA HOME USERPROFILE WINDIR SYS$LOGIN );
@@ -56,11 +56,11 @@ sub _read_config {
 }
 
 sub _display_version {
-  print "metabase-relayd version ", $VERSION, 
+  print "metabase-relayd version ", $VERSION,
     ", powered by POE::Component::Metabase::Relay::Server ", POE::Component::Metabase::Relay::Server->VERSION, "\n\n";
   print <<EOF;
 Copyright (C) 2010 Chris 'BinGOs' Williams
-This module may be used, modified, and distributed under the same terms as Perl itself. 
+This module may be used, modified, and distributed under the same terms as Perl itself.
 Please see the license that came with your Perl distribution for details.
 EOF
   exit;
@@ -99,7 +99,7 @@ sub run {
   my $self = bless \%config, $package;
 
   if ( $self->{address} ) {
-    $self->{address} = [ 
+    $self->{address} = [
       split(/,/,join(',',( ref $self->{address} eq 'ARRAY' ? @{ $self->{address} } : $self->{address} )))
     ];
     s/\s+//g for @{ $self->{address} };

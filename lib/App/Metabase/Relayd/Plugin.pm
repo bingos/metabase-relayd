@@ -41,7 +41,7 @@ If no appropriate configuration exists, then C<init> must return C<undef>.
 If appropriate configuration does exist, then the plugin may start a L<POE::Session>.
 
 L<App::Metabase::Relayd> will watch for a C<_child> event indicating that it has gained
-a plugin child session. It will detach this child after making a note of the child's 
+a plugin child session. It will detach this child after making a note of the child's
 session ID which it will use to send the following events.
 
 =head1 EVENTS
