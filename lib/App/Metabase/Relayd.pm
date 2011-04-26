@@ -9,19 +9,12 @@ use Cwd;
 use Getopt::Long;
 use Module::Pluggable search_path => ['App::Metabase::Relayd::Plugin'];
 use Module::Load::Conditional qw[can_load];
-BEGIN {
-  no strict 'refs';
-  no warnings;
-  *{ 'POE::Kernel::USE_SIGCHLD' } = sub () { 1 };
-}
-BEGIN {
-  use POE;
-}
+use POE;
 use POE::Component::Metabase::Relay::Server;
 
 use vars qw($VERSION);
 
-$VERSION = '0.24';
+$VERSION = '0.26';
 
 sub _metabase_dir {
   return $ENV{PERL5_MBRELAYD_DIR}
@@ -49,7 +42,7 @@ sub _read_config {
   if ( defined $Config->{_} ) {
     my $root = delete $Config->{_};
 	  @config = map { $_, $root->{$_} } grep { exists $root->{$_} }
-		              qw(debug url idfile dbfile address port multiple norelay offline);
+		              qw(debug url idfile dbfile address port multiple norelay offline submissions);
     push @config, 'plugins', $Config;
   }
   return @config;
