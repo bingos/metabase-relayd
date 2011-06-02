@@ -1,7 +1,6 @@
 #!perl
 use strict;
 use warnings;
-BEGIN { eval "use Event;"; }
 use App::Metabase::Relayd;
 $|=1; # Make STDOUT hot
 App::Metabase::Relayd->run();

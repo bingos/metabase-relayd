@@ -17,28 +17,20 @@ requires 'Module::Load::Conditional' => '0.38';
 requires 'Pod::Usage' => '1.00';
 requires 'POE' => '1.310';
 requires 'POE::Component::Metabase::Relay::Server' => '0.20';
-if ( !( can_use('Event') and can_use('POE::XS::Queue::Array') ) and can_cc() ) {
-print <<NOTICE;
-
-\a--------------------------------------------------------------
-Hey,
-
-You appear to have a working compiler. I can include 'Event'
-and 'POE::XS::Queue::Array' which will make POE work a lot
-faster.
-
---------------------------------------------------------------
-
-NOTICE
-
-my $prompt = prompt( 'Do you want to install \'Event\' and \'POE::XS::Queue::Array\' [Y/n]?', 'Y' );
-
-if ( $prompt =~ /^Y/i ) {
-  requires 'POE::Loop::Event' => 0;
-  requires 'Event' => 1.11;
+if ( can_cc() ) {
   requires 'POE::XS::Queue::Array' => 0.005;
-}
-
+  if ( $^O eq 'linux' ) {
+    requires 'POE::XS::Loop::EPoll' => 1.001;
+  }
+  # Problem with POE::XS::Loop::Poll on MacOSX use Event
+  # [rt.cpan.org #68608]
+  elsif ( $^O =~ /^(MSWin32|darwin)$/ ) {
+    requires 'Event' => 0;
+    requires 'POE::Loop::Event' => 0;
+  }
+  else {
+    requires 'POE::XS::Loop::Poll' => 1.000;
+  }
 }
 makemaker_args(dist => { PREOP => "$^X ./tools/git-log.pl > ./Changes" });
 auto_provides;
