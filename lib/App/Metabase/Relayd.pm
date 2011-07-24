@@ -65,7 +65,7 @@ EOF
 sub run {
   my $package = shift;
   my %config = _read_config();
-  $config{offline} = delete $config{norelay};
+  $config{offline} = delete $config{norelay} if $config{norelay};
   my $version;
   GetOptions(
     "help"        => sub { pod2usage(1); },

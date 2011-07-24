@@ -35,4 +35,5 @@ if ( can_cc() ) {
 makemaker_args(dist => { PREOP => "$^X ./tools/git-log.pl > ./Changes" });
 auto_provides;
 githubmeta;
+dynamic_config 1;
 WriteAll();
