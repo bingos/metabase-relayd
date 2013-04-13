@@ -10,14 +10,14 @@ use Getopt::Long;
 use Module::Pluggable search_path => ['App::Metabase::Relayd::Plugin'];
 use Module::Load::Conditional qw[can_load];
 use if ( $^O eq 'linux' ), 'POE::Kernel', { loop => 'POE::XS::Loop::EPoll' };
-use if ( $^O !~ /^(?:linux|MSWin32|darwin)$/ ), 'POE::Kernel', { loop => 'POE::XS::Loop::Poll' };
+use unless ( $^O =~ /^(?:linux|MSWin32|darwin)$/ ), 'POE::Kernel', { loop => 'POE::XS::Loop::Poll' };
 use if ( scalar grep { $^O eq $_ } qw(MSWin32 darwin) ), 'POE::Kernel', { loop => 'POE::Loop::Event' };
 use POE;
 use POE::Component::Metabase::Relay::Server;
 
 use vars qw($VERSION);
 
-$VERSION = '0.28';
+$VERSION = '0.30';
 
 sub _metabase_dir {
   return $ENV{PERL5_MBRELAYD_DIR}
