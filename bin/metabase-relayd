@@ -27,6 +27,7 @@ metabase-relayd - A relay server for Metabase
    --multiple     - Whether to use multiple HTTP clients;
    --submissions  - control the number of 'multiple' clients;
    --offline      - disable report submissions to the Metabase;
+   --nocurl       - disable automatic usage of POE::Component::Curl::Multi;
 
 =head1 DESCRIPTION
 
@@ -91,6 +92,10 @@ In conjunction with C<multiple> controls the number of concurrent submissions to
 =item C<--offline>
 
 Enable this so that reports are recorded to the database but not submitted to the Metabase.
+
+=item C<--nocurl>
+
+Enable this to disable automatic usage of L<POE::Component::Curl::Multi>.
 
 =back
 
@@ -170,6 +175,12 @@ In conjunction with C<multiple> controls the number of concurrent submissions to
 Enable this so that reports are recorded to the database but not submitted to the Metabase.
 
   offline=1
+
+=item C<nocurl=BOOL>
+
+Enable this to disable automatic usage of L<POE::Component::Curl::Multi>.
+
+  nocurl=1
 
 =back
 

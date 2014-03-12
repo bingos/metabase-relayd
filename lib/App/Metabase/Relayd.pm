@@ -17,7 +17,7 @@ use POE::Component::Metabase::Relay::Server;
 
 use vars qw($VERSION);
 
-$VERSION = '0.30';
+$VERSION = '0.32';
 
 sub _metabase_dir {
   return $ENV{PERL5_MBRELAYD_DIR}
@@ -45,7 +45,7 @@ sub _read_config {
   if ( defined $Config->{_} ) {
     my $root = delete $Config->{_};
 	  @config = map { $_, $root->{$_} } grep { exists $root->{$_} }
-		              qw(debug url idfile dbfile address port multiple norelay offline submissions);
+		              qw(debug url idfile dbfile address port multiple nocurl norelay offline submissions);
     push @config, 'plugins', $Config;
   }
   return @config;
@@ -55,7 +55,7 @@ sub _display_version {
   print "metabase-relayd version ", $VERSION,
     ", powered by POE::Component::Metabase::Relay::Server ", POE::Component::Metabase::Relay::Server->VERSION, "\n\n";
   print <<EOF;
-Copyright (C) 2010 Chris 'BinGOs' Williams
+Copyright (C) 2014 Chris 'BinGOs' Williams
 This module may be used, modified, and distributed under the same terms as Perl itself.
 Please see the license that came with your Perl distribution for details.
 EOF
@@ -78,6 +78,7 @@ sub run {
     "idfile=s"	  => \$config{idfile},
     "multiple"	  => \$config{multiple},
     "norelay|offline" => \$config{offline},
+    "nocurl"      => \$config{nocurl},
     "submissions" => \$config{submissions},
   ) or pod2usage(2);
 
@@ -90,7 +91,7 @@ sub run {
   printf("%-20s %s\n", $_, ref $config{$_}
     ? (join q{, } => @{ $config{$_} })
     : $config{$_})
-	  for grep { defined $config{$_} } qw(debug url dbfile idfile address port multiple offline);
+	  for grep { defined $config{$_} } qw(debug url dbfile idfile address port multiple offline nocurl);
 
   my $self = bless \%config, $package;
 
@@ -116,6 +117,7 @@ sub run {
     debug       => $self->{debug},
     multiple    => $self->{multiple},
     no_relay    => $self->{offline},
+    no_curl     => $self->{nocurl},
     session     => $self->{id},
     recv_event  => '_recv_evt',
     ( defined $self->{submissions} ? ( submissions => $self->{submissions} ) : () ),

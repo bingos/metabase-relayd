@@ -17,7 +17,7 @@ requires 'Module::Load::Conditional' => '0.38';
 requires 'Pod::Usage' => '1.00';
 requires 'POE' => '1.310';
 requires 'unless' => 0;
-requires 'POE::Component::Metabase::Relay::Server' => '0.20';
+requires 'POE::Component::Metabase::Relay::Server' => '0.34';
 if ( can_cc() ) {
   requires 'POE::XS::Queue::Array' => 0.005;
   if ( $^O eq 'linux' ) {
