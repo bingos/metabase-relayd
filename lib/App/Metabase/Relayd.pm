@@ -1,5 +1,7 @@
 package App::Metabase::Relayd;
 
+#ABSTRACT: the guts of the metabase-relayd command
+
 use strict;
 use warnings;
 use Pod::Usage;
@@ -14,10 +16,6 @@ use unless ( $^O =~ /^(?:linux|MSWin32|darwin)$/ ), 'POE::Kernel', { loop => 'PO
 use if ( scalar grep { $^O eq $_ } qw(MSWin32 darwin) ), 'POE::Kernel', { loop => 'POE::Loop::Event' };
 use POE;
 use POE::Component::Metabase::Relay::Server;
-
-use vars qw($VERSION);
-
-$VERSION = '0.38';
 
 sub _metabase_dir {
   return $ENV{PERL5_MBRELAYD_DIR}
@@ -52,7 +50,7 @@ sub _read_config {
 }
 
 sub _display_version {
-  print "metabase-relayd version ", $VERSION,
+  print "metabase-relayd version ", $App::Metabase::Relayd::VERSION,
     ", powered by POE::Component::Metabase::Relay::Server ", POE::Component::Metabase::Relay::Server->VERSION, "\n\n";
   print <<EOF;
 Copyright (C) 2014 Chris 'BinGOs' Williams
@@ -155,11 +153,7 @@ sub _recv_evt {
 
 'Relay it!';
 
-__END__
-
-=head1 NAME
-
-App::Metabase::Relayd - the guts of the metabase-relayd command
+=pod
 
 =head1 SYNOPSIS
 
@@ -173,15 +167,5 @@ App::Metabase::Relayd - the guts of the metabase-relayd command
 =head2 run
 
 This method is called by L<metabase-relayd> to do all the work.
-
-=head1 AUTHOR
-
-Chris C<BinGOs> Williams <chris@bingosnet.co.uk>
-
-=head1 LICENSE
-
-Copyright E<copy> Chris Williams
-
-This module may be used, modified, and distributed under the same terms as Perl itself. Please see the license that came with your Perl distribution for details.
 
 =cut

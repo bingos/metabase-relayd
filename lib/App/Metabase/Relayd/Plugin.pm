@@ -1,21 +1,17 @@
 package App::Metabase::Relayd::Plugin;
 
+#ABSTRACT: metabase-relayd plugins
+
 use strict;
 use warnings;
 
-our $VERSION = '0.38';
-
 qq[Smokin' plugins];
 
-__END__
-
-=head1 NAME
-
-App::Metabase::Relayd::Plugin - metabase-relayd plugins
+=pod
 
 =head1 DESCRIPTION
 
-This document describes the App::Metabase::Relayd::Plugin system for 
+This document describes the App::Metabase::Relayd::Plugin system for
 L<App::Metabase::Relayd> and L<metabase-relayd>.
 
 Plugins are a mechanism for providing additional functionality to
@@ -26,7 +22,7 @@ L<POE::Session>.
 
 =head1 INITIALISATION
 
-The plugin constructor is C<init>. L<App::Metabase::Relayd> uses 
+The plugin constructor is C<init>. L<App::Metabase::Relayd> uses
 L<Module::Pluggable> to find plugins beneath the App::Metabase::Relayd::Plugin
 namespace and will attempt to call C<init> on each plugin class that it finds.
 
@@ -63,16 +59,6 @@ C<ARG0> will be a C<HASHREF> with the following keys:
 C<ARG1> will be the IP address of the client that sent the report.
 
 =back
-
-=head1 AUTHOR
-
-Chris C<BinGOs> Williams <chris@bingosnet.co.uk>
-
-=head1 LICENSE
-
-Copyright E<copy> Chris Williams
-
-This module may be used, modified, and distributed under the same terms as Perl itself. Please see the license that came with your Perl distribution for details.
 
 =head1 SEE ALSO
 

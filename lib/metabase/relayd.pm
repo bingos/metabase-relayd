@@ -2,9 +2,6 @@ package metabase::relayd;
 
 use strict;
 use warnings;
-use vars qw($VERSION);
-
-$VERSION = '0.38';
 
 1;
 
